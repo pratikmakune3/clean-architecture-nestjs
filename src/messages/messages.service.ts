@@ -1,14 +1,12 @@
+import { Injectable } from '@nestjs/common';
 import { MessagesRepository } from './messages.repository';
 
+@Injectable() // Registering class inside DI container
 export class MessagesService {
   messagesRepo: MessagesRepository;
 
-  constructor() {
-    // Service is creating its own dependencies
-    // DONT DO THIS IN REAL APPS -
-    // We'll be using Dependency Injection system (of Nestjs)
-    // to create dependencies between different classes
-    this.messagesRepo = new MessagesRepository();
+  constructor(messagesRepo: MessagesRepository) {
+    this.messagesRepo = messagesRepo;
   }
 
   findOne(id: string) {
